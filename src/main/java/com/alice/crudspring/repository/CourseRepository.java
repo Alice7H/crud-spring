@@ -3,7 +3,7 @@ package com.alice.crudspring.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.alice.crudspring.controller.model.Course;
+import com.alice.crudspring.model.Course;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
