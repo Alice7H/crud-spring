@@ -2,8 +2,6 @@ package com.alice.crudspring.controller;
 
 import java.util.List;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,13 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alice.crudspring.dto.CourseDTO;
-import com.alice.crudspring.model.Course;
-import com.alice.crudspring.repository.CourseRepository;
 import com.alice.crudspring.service.CourseService;
 
 import jakarta.validation.Valid;
@@ -38,7 +33,7 @@ public class CourseController {
   }
 
   @GetMapping
-  public @ResponseBody List<CourseDTO> list() {
+  public List<CourseDTO> list() {
     return courseService.list();
   }
 
@@ -64,16 +59,4 @@ public class CourseController {
     courseService.delete(id);
   }
 
-  @Bean
-  CommandLineRunner initDatabase(CourseRepository courseRepository) {
-    return args -> {
-      courseRepository.deleteAll();
-
-      Course c = new Course();
-      c.setName("Angular with Spring");
-      c.setCategory("front-end");
-
-      courseRepository.save(c);
-    };
-  }
 }
