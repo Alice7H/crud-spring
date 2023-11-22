@@ -9,6 +9,7 @@ import com.alice.crudspring.dto.CourseDTO;
 import com.alice.crudspring.dto.LessonDTO;
 import com.alice.crudspring.enums.Category;
 import com.alice.crudspring.model.Course;
+import com.alice.crudspring.model.Lesson;
 
 @Component
 public class CourseMapper {
@@ -35,6 +36,16 @@ public class CourseMapper {
     }
     course.setName(courseDTO.name());
     course.setCategory(convertCagoryValue(courseDTO.category()));
+
+    List<Lesson> lessons = courseDTO.lessons().stream().map(lessonDTO -> {
+      var lesson = new Lesson();
+      lesson.setId(lessonDTO.id());
+      lesson.setName(lessonDTO.name());
+      lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+      lesson.setCourse(course);
+      return lesson;
+    }).collect(Collectors.toList());
+    course.setLessons(lessons);
     return course;
   }
 
