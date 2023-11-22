@@ -21,7 +21,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -50,6 +52,9 @@ public class Course {
   @Convert(converter = StatusConverter.class)
   private Status status = Status.ACTIVE;
 
+  @NotNull
+  @NotEmpty
+  @Valid
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
   private List<Lesson> lessons = new ArrayList<>();
 
@@ -65,7 +70,7 @@ public class Course {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@NotBlank @NotNull @Length(min = 5, max = 100) String name) {
     this.name = name;
   }
 
@@ -73,7 +78,7 @@ public class Course {
     return category;
   }
 
-  public void setCategory(Category category) {
+  public void setCategory(@NotNull Category category) {
     this.category = category;
   }
 
@@ -81,7 +86,7 @@ public class Course {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(@NotNull Status status) {
     this.status = status;
   }
 
@@ -89,7 +94,7 @@ public class Course {
     return lessons;
   }
 
-  public void setLessons(List<Lesson> lessons) {
+  public void setLessons(@NotNull @NotEmpty @Valid List<Lesson> lessons) {
     this.lessons = lessons;
   }
 

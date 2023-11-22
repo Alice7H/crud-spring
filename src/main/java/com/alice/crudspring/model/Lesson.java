@@ -1,5 +1,7 @@
 package com.alice.crudspring.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -10,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Lesson {
@@ -19,12 +23,19 @@ public class Lesson {
   @JsonProperty("_id")
   private Long id;
 
+  @NotBlank
+  @NotNull
+  @Length(min = 5, max = 100)
   @Column(length = 100, nullable = false)
   private String name;
 
+  @NotBlank
+  @NotNull
+  @Length(min = 10, max = 11)
   @Column(length = 11, nullable = false)
   private String youtubeUrl; // https://youtu.be/
 
+  @NotNull
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "course_id", nullable = false)
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -42,7 +53,7 @@ public class Lesson {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@NotBlank @NotNull @Length(min = 5, max = 100) String name) {
     this.name = name;
   }
 
@@ -50,7 +61,7 @@ public class Lesson {
     return youtubeUrl;
   }
 
-  public void setYoutubeUrl(String youtubeUrl) {
+  public void setYoutubeUrl(@NotBlank @NotNull @Length(min = 10, max = 11) String youtubeUrl) {
     this.youtubeUrl = youtubeUrl;
   }
 
@@ -58,7 +69,7 @@ public class Lesson {
     return course;
   }
 
-  public void setCourse(Course course) {
+  public void setCourse(@NotNull Course course) {
     this.course = course;
   }
 
